@@ -1,0 +1,132 @@
+{%load static %}
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{%block title%} FPL - Game Week Winner {%endblock%}</title>
+	<link rel="stylesheet" href="{%static 'css/custom.css' %}">
+	<link rel="stylesheet" href="{%static 'css/forms.css' %}">
+	<style>{%block extra-css%}{%endblock%}</style>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+</head>
+<body>
+<div class="layer"></div>
+	<div class="container">
+			{%block main%}
+			<div class="left">
+				{%block left%}
+<div class="card card-login mx-auto text-center bg-dark">
+        <div class="card-header mx-auto bg-dark">
+            <span> <img src="https://fantasy.premierleague.com/img/share/facebook-share.png" class="w-75" alt="Logo"> </span><br/>
+                        <span class="logo_title mt-5"> Login  </span>
+
+        </div>
+        <div class="card-body">
+            <form action="/getData" method="POST">{%csrf_token%}
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" id="id_email" name="email" class="form-control" placeholder="Username">
+                </div>
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" id="id_password" name="password" class="form-control" placeholder="Password">
+                </div>
+				    <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-futbol"></i></span>
+                    </div>
+                    <input type="text" id="id_leagueId" name="leagueId" class="form-control" placeholder="League Id">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="btn" value="Proceed" class="btn btn-outline-danger float-right login_btn">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+					</form>
+				{%endblock%}
+			</div>
+
+
+				<div class="right">{%block right-part%}
+
+				<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gameweek Point</th>
+      <th scope="col">Total Point</th>
+	  <th scope="col">Last Time Rank</th>
+	  <th scope="col">Page&Line</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{players1.name}}</td>
+      <td>{{players1.gwpoint}}</td>
+      <td>{{players1.tpoint}}</td>
+	  <td>{{players1.lrank}}</td>
+	  <td>{{players1.pno}} and {{players1.lno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>{{players2.name}}</td>
+      <td>{{players2.gwpoint}}</td>
+      <td>{{players2.tpoint}}</td>
+	  <td>{{players2.lrank}}</td>
+	  <td>{{players2.pno}} and {{players2.lno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>{{players3.name}}</td>
+      <td>{{players3.gwpoint}}</td>
+      <td>{{players3.tpoint}}</td>
+	  <td>{{players3.lrank}}</td>
+	  <td>{{players3.pno}} and {{players3.lno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>{{players4.name}}</td>
+      <td>{{players4.gwpoint}}</td>
+      <td>{{players4.tpoint}}</td>
+	  <td>{{players4.lrank}}</td>
+	  <td>{{players4.pno}} and {{players4.lno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>{{players5.name}}</td>
+      <td>{{players5.gwpoint}}</td>
+      <td>{{players5.tpoint}}</td>
+	  <td>{{players5.lrank}}</td>
+	  <td>{{players5.pno}} and {{players5.lno}}</td>
+    </tr>
+    
+  </tbody>
+</table>
+<p>Total No of Players : <b>{{totalPlayers}}</b></p>
+
+
+				</div>
+
+			
+			</div>
+			{%endblock%}
+	</div>{%endblock%}</div>
+
+</body>
+</html>
