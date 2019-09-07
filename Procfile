@@ -1,1 +1,1 @@
-web gunicorn FPL:app
+web gunicorn FPL:wsgi
