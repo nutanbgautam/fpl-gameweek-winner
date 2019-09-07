@@ -1,1 +1,1 @@
-web gunicorn FPL:wsgi
+web gunicorn FPL.wsgi
