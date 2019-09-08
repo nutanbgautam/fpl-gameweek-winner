@@ -29,7 +29,10 @@ def getdata(leagueId):
     response=session.get(url)
     data=response.text
     parsed=json.loads(data)
-    results=parsed["standings"]["results"]
+    try:
+        results=parsed["standings"]["results"]
+    except:
+        results=None
     
 def dataCollections(leagueId):
     global page,totalPlayers,line
