@@ -122,10 +122,12 @@ def index(request):
 
 def getDatas(request):
     global totalPlayers
-    form=LeagueId()
-    email=request.POST['email']
-    password=request.POST['password']
-    leagueId=request.POST['leagueId']
+    form=LeagueId(request.POST or None)
+    if request.POST=="POST" and form.is_valid():
+        email=request.POST['email']
+        password=request.POST['password']
+        leagueId=request.POST['leagueId']
+        return redirect("/")
     playersDetail=main(email,password,leagueId)
     return render(request,"main.html",{"totalPlayers":totalPlayers,"players1":playersDetail['first'],"players2":playersDetail['second'],"players3":playersDetail['third'],"players4":playersDetail['fourth'],"players5":playersDetail['fifth'],"form":form})
 
