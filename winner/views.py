@@ -122,7 +122,7 @@ def main(username,password,leagueId):
 
 def index(request):
     global playersDetail
-    print("\n I am in index function \n")
+    # print("\n I am in index function \n")
     form=LeagueId()
     if playersDetail==None:
         # print("Player Detail is none so I rendered this \n")
