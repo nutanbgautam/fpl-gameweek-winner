@@ -1,5 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.http import HttpResponse
+from django.urls import reverse
 from .forms import *
 import requests
 import json
@@ -10,6 +11,7 @@ page,line=1,1
 a,results,session=None,None,None
 players=[]
 totalPlayers=0
+playersDetail=None
 
 def login(username,password):
     global session
@@ -26,7 +28,9 @@ def login(username,password):
 def getdata(leagueId):
     global results
     url="https://fantasy.premierleague.com/api/leagues-classic/"+str(leagueId)+"/standings/?page_standings="+str(page)
+    # print("I am above session.get")
     response=session.get(url)
+    # print("I am below session.get")
     data=response.text
     parsed=json.loads(data)
     try:
@@ -69,7 +73,7 @@ def main(username,password,leagueId):
     dataCollections(leagueId)
     sortingResults()
     link="https://fantasy.premierleague.com/leagues/"+str(leagueId)+"/standings/c?phase=1&page_new_entries=1&page_standings="+str(players[0][4])
-    playersDetail={
+    playersDetails={
         "first":{    "name" : players[0][0],
             "gwpoint" :players[0][1],
             "tpoint" :players[0][2],
@@ -111,24 +115,32 @@ def main(username,password,leagueId):
 
         }
     }
-    return playersDetail
+    return playersDetails
     # endTime=time.time()
     # timeTaken=endTime-startTime
     # printingResult(timeTaken)
 
 def index(request):
+    global playersDetail
+    print("\n I am in index function \n")
     form=LeagueId()
-    return render(request,"main.html",{'form':form})
+    if playersDetail==None:
+        # print("Player Detail is none so I rendered this \n")
+        return render(request,"main.html",{'form':form})
+    else:
+        # print("Player Detail is not none \n")
+        # print("Request here is ",request)
+        # print("\n")
+        return render(request,"main.html",{"totalPlayers":totalPlayers,"players1":playersDetail['first'],"players2":playersDetail['second'],"players3":playersDetail['third'],"players4":playersDetail['fourth'],"players5":playersDetail['fifth'],"form":form})
 
 def getDatas(request):
-    global totalPlayers
+    global totalPlayers,playersDetail
     form=LeagueId(request.POST or None)
     email=request.POST['email']
     password=request.POST['password']
     leagueId=request.POST['leagueId']
-    if request.POST=="POST" and form.is_valid():
-        return redirect("/")
+    # print("\nI am in getDatas\n")
     playersDetail=main(email,password,leagueId)
-    return render(request,"main.html",{"totalPlayers":totalPlayers,"players1":playersDetail['first'],"players2":playersDetail['second'],"players3":playersDetail['third'],"players4":playersDetail['fourth'],"players5":playersDetail['fifth'],"form":form})
-
+    # print("I posted in main function in getDatas\n")
+    return HttpResponseRedirect("/")
 
